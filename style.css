@@ -1,0 +1,623 @@
+:root {
+    --cylinder-color: #336699;
+    --air-color: #87CEEB;
+    --gift-color: #cccccc6b;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: #f0f0f0;
+    text-align: center;
+    text-decoration: none;
+    
+  }
+    ul, li {
+      list-style: none;
+    }
+  
+  .container {
+    max-width: 1200px;
+    width: 95%;
+    margin: 0 auto;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  
+  .circuit-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .gif-container {
+    max-width: 100%;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+  }
+
+  #controlSection {
+    display: flex;
+  }
+  
+  .controls {
+    display: flex;
+    
+   
+    gap: 1rem;
+    margin-bottom: 1rem;
+    background: #f5f5f5;
+    padding: 2rem;
+    border-radius: 8px;
+  }
+  
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  button {
+    padding: 8px 16px !important;
+    font-size: 14px !important;
+    border-radius: 4px !important;
+  }
+  
+  .btn {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+  
+  .slider-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .slider-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  input[type="range"] {
+    width: 100%;
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .stat-card {
+    background: white;
+    padding: 12px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+  }
+  
+  .gauge {
+    width: 100%;
+    height: 10px;
+    background: #ddd;
+    border-radius: 5px;
+    margin-top: 5px;
+  }
+  
+  .gauge-fill {
+    height: 100%;
+    background: #4CAF50;
+    border-radius: 5px;
+    transition: width 0.3s;
+  }
+  
+  .chart-container {
+    height: 200px;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+  
+  /* Adding SVG animation styles */
+  .svg-container {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    min-height: 300px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background: #fff;
+    margin: 20px auto;
+  }
+  
+  .piston-cylinder {
+    fill: var(--cylinder-color);
+    stroke: #444;
+    stroke-width: 1;
+  }
+  
+  .piston-rod {
+    fill: #666;
+    stroke: #444;
+    stroke-width: 1;
+  }
+  
+  .air-flow {
+    fill: var(--air-color);
+    opacity: 0.6;
+  }
+  
+  .valve {
+    fill: #444;
+    stroke: #222;
+    stroke-width: 1;
+    transition: transform 0.3s;
+  }
+  
+  .pressure-gauge {
+    stroke: #333;
+    fill: none;
+    stroke-width: 2;
+  }
+  
+  .pressure-indicator {
+    stroke: red;
+    stroke-width: 2;
+    transition: transform 0.3s ease-out;
+  }
+  
+  .pressure-gauge text {
+    font-family: Arial, sans-serif;
+    user-select: none;
+  }
+  
+  .gauge-markings path {
+    counter-reset: non-scaling-stroke;
+  }
+  
+  /* Add animations */
+  @keyframes gaugeAnimation {
+    0% { stroke-dashoffset: 0; }
+    50% { stroke-dashoffset: 10; }
+    100% { stroke-dashoffset: 0; }
+  }
+  
+  .gauge-path {
+    animation: gaugeAnimation 3s ease-in-out infinite;
+  }
+  
+  @keyframes pulse {
+    0% { stroke-width: 8; }
+    50% { stroke-width: 10; }
+    100% { stroke-width: 8; }
+  }
+  
+  /* Add CSS for safety indicators */
+  .safety-panel {
+    height: 21rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    max-width: 30rem;
+    background-color: var(--gift-color);
+    border-radius: 8px;
+    
+  }
+  
+  .safety-status {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  .status-normal {
+    background: #d4edda;
+    color: #155724;
+  }
+  
+  .status-warning {
+    background: #fff3cd;
+    color: #856404;
+  }
+  
+  .status-critical {
+    background: #f8d7da;
+    color: #721c24;
+  }
+  
+  .optimal-range {
+    background: #cce5ff;
+    color: #004085;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  /* Modal styles */
+  .modal-dialog-centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal-header {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+  }
+  
+  .modal-body {
+    margin-bottom: 15px;
+  }
+  
+  .modal-footer {
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+    text-align: right;
+  }
+  
+  /* Ajustes para dispositivos móveis */
+  @media (max-width: 768px) {
+    .modal {
+      width: 95%;
+      max-height: 80vh;
+      padding: 15px;
+    }
+  
+    .tour-tooltip {
+      width: 85%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  
+    .modal-footer {
+      padding: 5px;
+      text-align: center;
+    }
+  }
+  /* Update tour overlay to be below modal */
+  .tour-overlay {
+    z-index: 2000;
+  }
+  
+  .tour-tooltip {
+    z-index: 1000;
+  }
+  
+  /* Ensure modal content stays on top */
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    position: relative;
+    z-index: 1002;
+  }
+  
+  /* Add animation for modal appearance */
+  @keyframes modalFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .modal {
+    animation: modalFadeIn 0.3s ease-out;
+  }
+  
+  /* Tour styles */
+  .tour-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    z-index: 2000;
+  }
+  
+  .tour-tooltip {
+    position: fixed;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 300px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 2001;
+    transition: all 0.3s ease-out;
+  }
+  
+  .tour-tooltip::after {
+    content: '';
+    position: absolute;
+    border: 10px solid transparent;
+  }
+  
+  .tour-tooltip.bottom::after {
+    border-bottom-color: white;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .tour-tooltip.top::after {
+    border-top-color: white;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .tour-tooltip.left::after {
+    border-left-color: white;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .tour-tooltip.right::after {
+    border-right-color: white;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .tour-buttons {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+  
+  .tour-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .tour-next {
+    background: #4CAF50;
+    color: white;
+  }
+  
+  .tour-prev {
+    background: #666;
+    color: white;
+  }
+  
+  .tour-skip {
+    background: #f44336;
+    color: white;
+  }
+  
+  @media (max-width: 768px) {
+    body {
+      padding: 10px;
+    }
+    
+    .container {
+      padding: 10px;
+    }
+    
+    h1 {
+      font-size: 1.5rem;
+      text-align: center;
+    }
+    
+    .tour-button {
+      display: block;
+      margin: 10px auto;
+    }
+    
+    .controls {
+      grid-template-columns: 1fr;
+    }
+    
+    .stat-card {
+      padding: 10px;
+    }
+    
+    .slider-container {
+      padding: 0 5px;
+    }
+    
+    .tour-tooltip {
+      width: 85%;
+      max-width: none;
+      left: 50% !important;
+      transform: translateX(-50%);
+    }
+    
+    /* Ensure modal stays within viewport on mobile */
+    .modal {
+      width: 95%;
+      max-height: 80vh;
+      margin: 10px;
+      padding: 15px;
+    }
+    
+    /* Adjust buttons for touch devices */
+    button {
+      min-height: 44px; /* Better touch targets */
+      margin: 5px 0;
+    }
+  }
+  
+  /* Ensure tour tooltip arrow positioning works on all screen sizes */
+  .gauge-markings path {
+    counter-reset: non-scaling-stroke;
+  }
+  
+  /* Add overflow control for long content */
+  .modal-body {
+    overflow-y: auto;
+    max-height: calc(80vh - 120px); /* Account for header and footer */
+  }
+  
+  /* Ensure modal overlay covers entire viewport */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000; /* Increased z-index to be above everything */
+    padding: 15px;
+  }
+  
+  /* Add smooth transitions */
+  .modal, .tour-tooltip {
+    transition: all 0.3s ease-out;
+  }
+  
+  /* Add these CSS rules to enhance component highlighting */
+  .highlight {
+    position: relative;
+    z-index: 1002; /* Increased z-index to be above other elements */
+    box-shadow: 0 0 0 4px #FF0000;
+  }
+  
+  /* Add styles to ensure components can be brought forward */
+  .container > * {
+    position: relative;
+    transition: z-index 0.1s;
+  }
+  
+  .controls > * {
+    position: relative;
+    transition: z-index 0.1s;
+    padding: 2rem;
+  
+
+
+  }
+  
+  .circuit-display > * {
+    position: relative;
+    transition: z-index 0.1s;
+  }
+  
+  .stats-grid > * {
+    position: relative;
+    transition: z-index 0.1s;
+  }
+  
+  /* Add to existing CSS */
+  .warning-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+  
+  .warning-indicator.good {
+    background-color: #4CAF50;
+  }
+  
+  .warning-indicator.warning {
+    background-color: #FFA500;
+  }
+  
+  .warning-indicator.critical {
+    background-color: #FF0000;
+  }
+  
+  /* Add these styles to the existing stylesheet */
+  .system-explanation {
+    margin-top: 40px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+  }
+  
+  .demo-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 20px;
+  }
+  
+  .gif-demo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+  }
+
+  .gif-demo img {
+    width: auto;
+  }
+  
+  .components-explanation {
+    width: 100%;
+  }
+  
+  /* New styles for diagram section */
+  .diagram-section {
+    margin: 20px 0 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .diagram-image {
+    max-width: 100%;
+    height: auto;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .diagram-description {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    color: #555;
+  }
+  
+  @media (max-width: 768px) {
+    .diagram-section {
+      padding: 15px;
+    }
+    
+    .diagram-description {
+      font-size: 0.9rem;
+      padding: 0 10px;
+    }
+  }
+  
