@@ -184,13 +184,23 @@ const safetyLimits = {
     warningsListEl.innerHTML = circuit.warnings.map(w => 
       `<div class="safety-status status-warning">${w}</div>`).join('');
   }
+
+  // Adicionar uma nova variável para direção
+circuit.pistonDirection = 1; // 1 para avançar, -1 para retornar
   
   // Animation loop
   function updateAnimation() {
     if (!circuit.isRunning) return;
     
-    // Update piston position
-    circuit.pistonPosition = (circuit.pistonPosition + circuit.cycleSpeed) % 200;
+  // Atualize a posição com base na direção
+circuit.pistonPosition += circuit.pistonDirection * circuit.cycleSpeed;
+
+// Inverta a direção se atingir os limites
+if (circuit.pistonPosition >= 200) {
+    circuit.pistonDirection = -1; // Troca para retornar
+} else if (circuit.pistonPosition <= 0) {
+    circuit.pistonDirection = 1; // Troca para avançar
+}
     piston.setAttribute('x', -90 + circuit.pistonPosition);
     pistonRod.setAttribute('x', -50 + circuit.pistonPosition);
     
